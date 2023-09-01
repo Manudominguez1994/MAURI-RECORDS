@@ -7,6 +7,7 @@ const isTokenValid = require("../middlewares/isTokenValid");
 //POST /api/auth/signup => registrar el usuario
 router.post("/signup", async (req, res, next) => {
   const { name, email, password, confirmPassword, city } = req.body;
+  // const image = "https://thumbs.dreamstime.com/z/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg?w=768"
   // console.log(req.body);
   //Validaciones:
   //Campos llenos
@@ -36,7 +37,8 @@ router.post("/signup", async (req, res, next) => {
       name,
       email,
       password: hashPassword,
-      city
+      city,
+      
     });
     // console.log("usuario creado en DB", response);
     res.json("Usuario creado");
@@ -47,7 +49,7 @@ router.post("/signup", async (req, res, next) => {
 //POST /api/auth/login => validar las credenciales...aqui creamos la sesion
 router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   //Todas las validaciones
   try {
     //El usuario exista

@@ -20,7 +20,7 @@ const userSchema = new Schema(
     },
     image: {
       type: String,
-      default: ""
+      default: "https://thumbs.dreamstime.com/z/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg?w=768"
     },
     role: {
       type: String,
