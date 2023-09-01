@@ -20,7 +20,7 @@ const userSchema = new Schema(
     },
     image: {
       type: String,
-      default: "https://thumbs.dreamstime.com/z/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg?w=768"
+      default: "https://res.cloudinary.com/dausfjvtt/image/upload/v1693589414/Mauri%20Records/ywcxq9aolbl96745ibeh.jpg"
     },
     role: {
       type: String,
