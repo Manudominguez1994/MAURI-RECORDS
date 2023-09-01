@@ -7,7 +7,7 @@ const isTokenValid = require("../middlewares/isTokenValid");
 //POST /api/auth/signup => registrar el usuario
 router.post("/signup", async (req, res, next) => {
   const { name, email, password, confirmPassword } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   //Validaciones:
   //Campos llenos
   if (!name || !email || !password || !confirmPassword) {
