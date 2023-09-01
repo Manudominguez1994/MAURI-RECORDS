@@ -6,7 +6,7 @@ const isTokenValid = require("../middlewares/isTokenValid");
 
 //POST /api/auth/signup => registrar el usuario
 router.post("/signup", async (req, res, next) => {
-  const { name, email, password, confirmPassword } = req.body;
+  const { name, email, password, confirmPassword, city } = req.body;
   // console.log(req.body);
   //Validaciones:
   //Campos llenos
@@ -29,17 +29,17 @@ router.post("/signup", async (req, res, next) => {
     //Encriptar constraseña
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
-    const hashConfirmPassword = await bcrypt.hash(confirmPassword, salt);
+   
     // console.log("pass filter", hashPassword);
     //Crear usuario en la base de datos
     const response = await User.create({
       name,
       email,
       password: hashPassword,
-      confirmPassword: hashConfirmPassword,
+      city
     });
     // console.log("usuario creado en DB", response);
-    res.json("probando signup");
+    res.json("Usuario creado");
   } catch (error) {
     next(error);
   }

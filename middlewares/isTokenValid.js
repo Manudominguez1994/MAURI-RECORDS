@@ -8,7 +8,7 @@ const isTokenValid = jwt({
     console.log(req.headers);
 
     if (req.headers === undefined || req.headers.authorization === undefined) {
-      console.log("Token no entregado");
+      // console.log("Token no entregado");
       return null;
     }
 
@@ -16,7 +16,7 @@ const isTokenValid = jwt({
     const tokenType = tokenArr[0]
     const token = tokenArr[1]
     if(tokenType !== "Bearer"){
-      console.log("Tipo de token no es valido");
+      // console.log("Tipo de token no es valido");
       return null
     }
     console.log("Token entregado");

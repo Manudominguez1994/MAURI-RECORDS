@@ -14,23 +14,20 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required."],
     },
-    confirmPassword:{
-      type: String,
-      required: true
-    },
     name: {
       type: String,
       required: true,
     },
     image: {
       type: String,
-      default: "public/images/profile-picture-default-png.png",
+      default: ""
     },
     role: {
       type: String,
       enum: ["admin", "user"],
-      default: "user"
+      default: "user",
     },
+    city: String,
     favorite: [],
   },
   {
