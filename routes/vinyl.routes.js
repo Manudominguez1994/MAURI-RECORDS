@@ -20,7 +20,7 @@ router.post("/create", isTokenValid, async (req, res, next) => {
     const sellerUser = req.payload._id;
     // console.log(sellerUser)
 
-    await Vinyl.create({
+    const response = await Vinyl.create({
       title,
       artist,
       image,
@@ -31,7 +31,7 @@ router.post("/create", isTokenValid, async (req, res, next) => {
       genre,
     });
     // console.log('vinilo creado', response)
-    res.json("Vinilo creado");
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -51,6 +51,7 @@ router.get("/:vinylId", isTokenValid, async (req, res, next) => {
     console.log(req.params.vinylId,"req.paramasssssssssssssssssssssssssss");
     try {
         const response = await Vinyl.findById(req.params.vinylId)
+        .populate("sellerUser")
          console.log(response)
          res.json(response)
     } catch (error) {
