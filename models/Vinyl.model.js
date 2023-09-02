@@ -28,6 +28,7 @@ const vinylSchema = new Schema(
     },
     onSale: {
       type: Boolean,
+      default: true
     },
     genre: {
       type: String,

@@ -29,5 +29,17 @@ router.put("/editprofile", isTokenValid, async (req, res, next)=>{
     }
 })
 //DELETE /api/user/delete => Borrar cuenta de usuario
+router.delete("/deleteprofile", isTokenValid, async (req, res, next) => {
+
+    try { 
+    await User.findByIdAndDelete(req.payload._id)
+    res.json("Usuario eliminado")
+        
+    } catch (error) {
+        next(error)
+    }
+})
+
 
 module.exports = router;
+
