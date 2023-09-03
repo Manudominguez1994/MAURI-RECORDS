@@ -28,12 +28,37 @@ try {
         sellerUser, 
         stateConservation,
         genre})
-    console.log('vinilo creado', response)
+    // console.log('vinilo creado', response)
+    res.json(response)
 
 } catch (error) {
     next(error)
 }
 })
+
+//GET => /vinyl/allVinyls
+router.get("/allVinyls", isTokenValid, async (req, res, next)=>{
+    try {
+       const response = await Vinyl.find()
+        //  console.log(response); 
+         res.json(response)
+    } catch (error) {
+        next(error)
+    }
+})
+
+//GET => /api/vinyl/:vinylId
+router.get("/:vinylId", isTokenValid, async (req, res, next) => {
+    console.log(req.params.vinylId,"req.paramasssssssssssssssssssssssssss");
+    try {
+        const response = await Vinyl.findById(req.params.vinylId)
+        .populate("sellerUser")
+         console.log(response)
+         res.json(response)
+    } catch (error) {
+        next(error)
+    }
+});
 
 //GET /vinyl/genre
 // router.get('/genre', (req, res, next) => {
@@ -41,6 +66,6 @@ try {
 //     res.json(Vinyl.schema.path('genre'.enumValues))
 // })
 
-
+// Hola Manueh
 
 module.exports = router;
