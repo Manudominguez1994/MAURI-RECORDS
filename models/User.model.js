@@ -28,7 +28,10 @@ const userSchema = new Schema(
       default: "user",
     },
     city: String,
-    favorite: [],
+    favorite: [{
+      type: Schema.Types.ObjectId,
+      ref: "Vinyl",
+    }],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
