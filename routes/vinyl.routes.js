@@ -59,6 +59,40 @@ router.get("/:vinylId", isTokenValid, async (req, res, next) => {
     }
 });
 
+//PUT => /api/vinyl/:vinylId
+router.put("/:vinylId", isTokenValid, async (req, res, next) => {
+const { title, artist, image, description, price, stateConservation, genre } = req.body
+    try {
+        const response = await Vinyl.findByIdAndUpdate(req.params.vinylId, {
+            title,
+            artist,
+            image,
+            description,
+            price,
+            stateConservation,
+            genre
+        }, {new:true})
+
+        // console.log(response)
+        res.json(response)
+
+    } catch (error) {
+        next(error)
+    }
+   
+})
+
+//DELETE => /api/vinyl/:vinylId
+router.delete("/:vinylId", isTokenValid, async (req, res, next) => {
+    try {
+        await Vinyl.findByIdAndDelete(req.params.vinylId)
+        res.json('Vinilo eliminado')
+    } catch (error) {
+        next(error)
+    }
+})
+
+
 
 
 //GET /vinyl/genre
@@ -67,6 +101,6 @@ router.get("/:vinylId", isTokenValid, async (req, res, next) => {
 //     res.json(Vinyl.schema.path('genre'.enumValues))
 // })
 
-//  !Hola Manueh PROBANDO
+//  ! Hola Manueh PROBANDO
 
 module.exports = router;
