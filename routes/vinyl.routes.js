@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const Vinyl = require('../models/Vinyl.model');
 
-
 const isTokenValid = require ("../middlewares/isTokenValid");
 
 //POST => /vinyl/create
