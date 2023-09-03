@@ -67,6 +67,6 @@ router.get("/:vinylId", isTokenValid, async (req, res, next) => {
 //     res.json(Vinyl.schema.path('genre'.enumValues))
 // })
 
-// Hola Manueh
+//  !Hola Manueh PROBANDO
 
 module.exports = router;
