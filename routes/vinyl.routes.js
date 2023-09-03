@@ -35,7 +35,7 @@ try {
 }
 })
 
-// //GET /vinyl/genre
+//GET /vinyl/genre
 // router.get('/genre', (req, res, next) => {
 //     console.log("quiero ver enum", Vinyl.schema.path('genre'.enumValues))
 //     res.json(Vinyl.schema.path('genre'.enumValues))
