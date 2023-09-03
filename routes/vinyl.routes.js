@@ -15,6 +15,8 @@ try {
     stateConservation,
     genre} = req.body
 
+//const title = req.body.title
+
     console.log('necesito ver este objeto', req.payload)
     const sellerUser = req.payload._id
     console.log(sellerUser)
