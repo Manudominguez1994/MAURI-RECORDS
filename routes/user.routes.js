@@ -7,7 +7,7 @@ const isTokenValid = require("../middlewares/isTokenValid");
 router.get("/myprofile", isTokenValid, async (req, res, next) => {
   console.log("informacion payload la necesito porfavor", req.payload);
   try {
-    const response = await User.findById(req.payload._id);
+    const response = await User.findById(req.payload._id).populate("favorite");
     // console.log("estes es mi usuario buscado en la base de datos",response);
     res.json(response);
   } catch (error) {
@@ -46,22 +46,23 @@ router.delete("/deleteprofile", isTokenValid, async (req, res, next) => {
 
 router.put("/:vinylId/fav", isTokenValid, async (req, res, next) => {
   try {
-    const userId = await User.findById(req.payload._id)
-    const vinylFav = await Vinyl.findById(req.params.vinylId);
-    console.log("este vinilo agregar a favoritos", vinylFav);
-    console.log("usuario al que quiero agregar favorito", userId);
-    if(userId.favorite.includes(vinylFav._id)){
-        User.findByIdAndUpdate(userId, {
-            $pull: { favorite: vinylFav._id }
-          });
-    }else{
-        User.findByIdAndUpdate(userId, {
-          $addToSet: { favorite: vinylFav }
-        });
-    }
-    console.log('3er vinilo en fav', userId.favorite[2])
+    const user = await User.findById(req.payload._id)
+    // const vinylFav = await Vinyl.findById(req.params.vinylId)
+    //console.log("este vinilo agregar a favoritos", vinylFav);
+    console.log("usuario al que quiero agregar favorito", user);
+    //if(user.favorite.includes(req.params.vinylId)){
+    //    User.findByIdAndUpdate(user._id, {
+    //        $pull: { favorite: req.params.vinylId }
+    //      })
+    //}else{
+        User.findByIdAndUpdate(req.payload._id, {
+          $addToSet: { favorite: "64f5ef2d7e290887e581a0bc" }
+        })
+    //}
+
+    console.log(' vinilo en fav')
     // console.log("Este es mi id del vinilo favorito", response);
-    // res.json(response);
+    res.json("¨Vinilo agregado/borrado de fav");
   } catch (error) {
     next(error);
   }

@@ -88,9 +88,7 @@ router.delete("/:vinylId", isTokenValid, async (req, res, next) => {
     try {
         const response = await Vinyl.findByIdAndDelete(req.params.vinylId)
         console.log('vinilo borrado', response)
-        // await User.find(, {
-        //     $pull: { favorite: req.params.vinylId }
-        //   });
+        await User.find({favorite: req.params.vinylId })
         res.json('Vinilo eliminado')
     } catch (error) {
         next(error)
