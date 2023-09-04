@@ -48,17 +48,18 @@ router.put("/:vinylId/fav", isTokenValid, async (req, res, next) => {
   try {
     const userId = await User.findById(req.payload._id)
     const vinylFav = await Vinyl.findById(req.params.vinylId);
-    // console.log("id  de  mi vinilo ", vinylFav._id);
-    // console.log("usuario al que quiero agregar favorito", userId);
+    console.log("este vinilo agregar a favoritos", vinylFav);
+    console.log("usuario al que quiero agregar favorito", userId);
     if(userId.favorite.includes(vinylFav._id)){
-         await User.findByIdAndUpdate(userId, {
+        User.findByIdAndUpdate(userId, {
             $pull: { favorite: vinylFav._id }
           });
     }else{
-        await User.findByIdAndUpdate(userId, {
-          $addToSet: { favorite: vinylFav._id }
+        User.findByIdAndUpdate(userId, {
+          $addToSet: { favorite: vinylFav }
         });
     }
+    console.log('3er vinilo en fav', userId.favorite[2])
     // console.log("Este es mi id del vinilo favorito", response);
     // res.json(response);
   } catch (error) {

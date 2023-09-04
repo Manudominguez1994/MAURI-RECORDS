@@ -82,13 +82,15 @@ const { title, artist, image, description, price, stateConservation, genre } = r
    
 })
 
-//DELETE => /api/vinyl/:vinylId
+//DELETE => /api/vinyl/:vinylId 
+//! BORRAR DE LOS DEMÁS NO DEL PROPIO
 router.delete("/:vinylId", isTokenValid, async (req, res, next) => {
     try {
-        await Vinyl.findByIdAndDelete(req.params.vinylId)
-        await User.findByIdAndUpdate(req.payload._id, {
-            $pull: { favorite: req.params.vinylId }
-          });
+        const response = await Vinyl.findByIdAndDelete(req.params.vinylId)
+        console.log('vinilo borrado', response)
+        // await User.find(, {
+        //     $pull: { favorite: req.params.vinylId }
+        //   });
         res.json('Vinilo eliminado')
     } catch (error) {
         next(error)
@@ -98,7 +100,7 @@ router.delete("/:vinylId", isTokenValid, async (req, res, next) => {
 
 
 
-//GET /vinyl/genre
+// GET /vinyl/genre
 // router.get('/genre', (req, res, next) => {
 //     console.log("quiero ver enum", Vinyl.schema.path('genre'.enumValues))
 //     res.json(Vinyl.schema.path('genre'.enumValues))
