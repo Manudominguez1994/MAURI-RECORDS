@@ -28,6 +28,7 @@ router.put("/editprofile", isTokenValid, async (req, res, next) => {
       },
       { new: true }
     );
+    res.json("Perfil actualizado")
   } catch (error) {
     next(error);
   }
@@ -43,22 +44,21 @@ router.delete("/deleteprofile", isTokenValid, async (req, res, next) => {
 });
 
 //PUT api/user/:vinylId/fav => añadir a favoritos
-
 router.put("/:vinylId/fav", isTokenValid, async (req, res, next) => {
   try {
     const user = await User.findById(req.payload._id)
     // const vinylFav = await Vinyl.findById(req.params.vinylId)
     //console.log("este vinilo agregar a favoritos", vinylFav);
     console.log("usuario al que quiero agregar favorito", user);
-    //if(user.favorite.includes(req.params.vinylId)){
-    //    User.findByIdAndUpdate(user._id, {
-    //        $pull: { favorite: req.params.vinylId }
-    //      })
-    //}else{
-        User.findByIdAndUpdate(req.payload._id, {
-          $addToSet: { favorite: "64f5ef2d7e290887e581a0bc" }
+    if(user.favorite.includes(req.params.vinylId)){
+     await  User.findByIdAndUpdate(user._id, {
+           $pull: { favorite: req.params.vinylId }
+         })
+    }else{
+      await  User.findByIdAndUpdate(req.payload._id, {
+          $addToSet: { favorite: req.params.vinylId }
         })
-    //}
+    }
 
     console.log(' vinilo en fav')
     // console.log("Este es mi id del vinilo favorito", response);
