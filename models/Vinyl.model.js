@@ -11,7 +11,7 @@ const vinylSchema = new Schema(
     },
     image: {
       type: String,
-      default: "imagen default",
+      default: "https://res.cloudinary.com/dausfjvtt/image/upload/v1693846294/Mauri%20Records/hjxxv73hlhgbq7ncljqv.png",
     },
     description: String,
     price: {
@@ -32,7 +32,7 @@ const vinylSchema = new Schema(
     },
     genre: {
       type: String,
-      enum: ["Rock", "Pop", "Hip-Hop", "Jazz", "Electronica", "Soul", "Reagge"],
+      enum: ["Rock", "Pop", "Hip-Hop", "Jazz", "Electronica", "Soul", "Reagge","Otros"],
     },
   },
   {
