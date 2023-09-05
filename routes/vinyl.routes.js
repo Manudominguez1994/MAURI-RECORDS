@@ -64,6 +64,9 @@ router.get("/:vinylId", isTokenValid, async (req, res, next) => {
 router.put("/:vinylId", isTokenValid, async (req, res, next) => {
   const { title, artist, image, description, price, stateConservation, genre } =
     req.body;
+
+  const onSale = true;
+
   try {
     const response = await Vinyl.findByIdAndUpdate(
       req.params.vinylId,
@@ -74,6 +77,7 @@ router.put("/:vinylId", isTokenValid, async (req, res, next) => {
         description,
         price,
         stateConservation,
+        onSale,
         genre,
       },
       { new: true }
@@ -93,8 +97,8 @@ router.delete("/:vinylId", isTokenValid, async (req, res, next) => {
     const response = await Vinyl.findByIdAndDelete(req.params.vinylId);
     console.log("vinilo borrado", response);
     await User.updateMany(
-      {favorite: req.params.vinylId },
-      {$pull: { favorite: req.params.vinylId }}
+      { favorite: req.params.vinylId },
+      { $pull: { favorite: req.params.vinylId } }
     );
     res.json("Vinilo eliminado");
   } catch (error) {

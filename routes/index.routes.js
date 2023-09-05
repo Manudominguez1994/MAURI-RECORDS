@@ -16,4 +16,7 @@ router.use("/upload", uploadRoutes);
 const vinylRoutes = require("./vinyl.routes");
 router.use("/vinyl", vinylRoutes);
 
+const operationRoutes = require("./operation.routes");
+router.use("/operation", operationRoutes);
+
 module.exports = router;

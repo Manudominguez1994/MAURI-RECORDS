@@ -13,9 +13,18 @@ const operationSchema = new Schema({
     ref: "User",
   },
   totalPrice:{
-    type: Number
+    type: Number,
+ 
   },
   valoration:{
     type: String
   }
+},
+{
+  // this second object adds extra properties: `createdAt` and `updatedAt`
+  timestamps: true,
 });
+
+const Operation = model("Operation", operationSchema);
+
+module.exports = Operation;
