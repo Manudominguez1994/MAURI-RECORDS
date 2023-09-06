@@ -116,10 +116,15 @@ router.delete("/:vinylId", isTokenValid, async (req, res, next) => {
   }
 });
 
-// GET /vinyl/genre
-// router.get('/genre', (req, res, next) => {
-//     console.log("quiero ver enum", Vinyl.schema.path('genre'.enumValues))
-//     res.json(Vinyl.schema.path('genre'.enumValues))
-// })
+//GET => /vinyl/allVinyls
+router.get("/allVinyls/on-sale", isTokenValid, async (req, res, next) => {
+  try {
+    const response = await Vinyl.find({$and: [{onSale: true}, {sellerUser: req.payload._id}]});
+    //  console.log(response);
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
