@@ -38,7 +38,7 @@ router.post("/signup", async (req, res, next) => {
   try {
     //Usuario no repetido
     const userfound = await User.findOne({email: email})
-    if(userfound.email){
+    if(userfound){
       res.status(400).json({ errorMessage: "Este usuario ya esta registrado" });
       return;
     }
