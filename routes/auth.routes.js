@@ -7,19 +7,19 @@ const isTokenValid = require("../middlewares/isTokenValid");
 //POST /api/auth/signup => registrar el usuario
 router.post("/signup", async (req, res, next) => {
   const { name, email, password, confirmPassword, city } = req.body;
-  // const image = "https://thumbs.dreamstime.com/z/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg?w=768"
-  // console.log(req.body);
+  
+  console.log(req.body);
   //Validaciones:
   //Campos llenos
+  if (!name || !email || !password || !confirmPassword || !city) {
+    res
+    .status(400)
+    .json({ errorMessage: "Todos los campos deben estar llenos" });
+    return;
+  }
   //Contraseñas Correctas
   if (password !== confirmPassword) {
     res.status(400).json({ errorMessage: "Las contraseñas no coinciden" });
-    return;
-  }
-  if (!name || !email || !password || !confirmPassword || !city) {
-    res
-      .status(400)
-      .json({ errorMessage: "Todos los campos deben estar llenos" });
     return;
   }
   //Email formato especifico
