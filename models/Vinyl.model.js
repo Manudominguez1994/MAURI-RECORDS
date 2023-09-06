@@ -11,7 +11,7 @@ const vinylSchema = new Schema(
     },
     image: {
       type: String,
-      default: "https://res.cloudinary.com/dausfjvtt/image/upload/v1693846294/Mauri%20Records/hjxxv73hlhgbq7ncljqv.png",
+      default: "https://res.cloudinary.com/dausfjvtt/image/upload/v1693589414/Mauri%20Records/ywcxq9aolbl96745ibeh.jpg",
     },
     description: String,
     price: {

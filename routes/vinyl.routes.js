@@ -16,12 +16,19 @@ router.post("/create", isTokenValid, async (req, res, next) => {
   } = req.body;
   const sellerUser = req.payload._id;
 
-  if (!title || !artist || !image || !description || !price || !stateConservation || !genre) {
+  if (!title || !artist  || !description || !price || !stateConservation || !genre) {
     res
       .status(400)
       .json({ errorMessage: "Todos los campos deben estar llenos" });
     return;
+  } 
+  if (!image) {
+    res
+      .status(400)
+      .json({ errorMessage: "Se requiere una imagen para vender un vinilo" });
+    return;
   }
+
   try {
 
     // console.log("necesito ver este objeto", req.payload);
