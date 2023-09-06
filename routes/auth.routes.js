@@ -11,26 +11,36 @@ router.post("/signup", async (req, res, next) => {
   // console.log(req.body);
   //Validaciones:
   //Campos llenos
-  if (!name || !email || !password || !confirmPassword) {
-    res
-      .status(400)
-      .json({ errorMessage: "Todos los campos deben estar llenos" });
-    return;
-  }
   //Contraseñas Correctas
   if (password !== confirmPassword) {
     res.status(400).json({ errorMessage: "Las contraseñas no coinciden" });
     return;
   }
-  //Nombre formato especifico
+  if (!name || !email || !password || !confirmPassword || !city) {
+    res
+      .status(400)
+      .json({ errorMessage: "Todos los campos deben estar llenos" });
+    return;
+  }
+  //Email formato especifico
+  const regexEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+  if (!regexEmail.test(email)) {
+    res.status(400).json({ errorMessage: "Correo con formato incorrecto" });
+    return;
+  }
   //Contraseña tenga un formato especifico
+  const regexPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;;
+  if (!regexPassword.test(password, confirmPassword)) {
+    res.status(400).json({ errorMessage: "La contraseña tiene que contener Mayuscula,simbolo y numero" });
+    return;
+  }
   //Usuario no repetido
 
   try {
     //Encriptar constraseña
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
-   
+
     // console.log("pass filter", hashPassword);
     //Crear usuario en la base de datos
     const response = await User.create({
@@ -38,7 +48,6 @@ router.post("/signup", async (req, res, next) => {
       email,
       password: hashPassword,
       city,
-      
     });
     // console.log("usuario creado en DB", response);
     res.json("Usuario creado");
