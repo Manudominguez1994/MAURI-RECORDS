@@ -53,7 +53,7 @@ router.post("/create", isTokenValid, async (req, res, next) => {
 //GET => /vinyl/allVinyls
 router.get("/allVinyls", isTokenValid, async (req, res, next) => {
   try {
-    const response = await Vinyl.find();
+    const response = await Vinyl.find({onSale: true});
     //  console.log(response);
     res.json(response);
   } catch (error) {
