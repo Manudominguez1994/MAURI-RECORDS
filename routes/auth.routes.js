@@ -34,9 +34,14 @@ router.post("/signup", async (req, res, next) => {
     res.status(400).json({ errorMessage: "La contraseña tiene que contener Mayuscula,simbolo y numero" });
     return;
   }
-  //Usuario no repetido
-
+  
   try {
+    //Usuario no repetido
+    const userfound = await User.findOne({email: email})
+    if(userfound.email){
+      res.status(400).json({ errorMessage: "Este usuario ya esta registrado" });
+      return;
+    }
     //Encriptar constraseña
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
