@@ -28,14 +28,9 @@ router.post("/create/:vinylId", isTokenValid, async (req, res, next) => {
     // 3. ve a la BD y crea una operación con la data obtenida
 
     if (operationFound === null) {
-      const vinylObj = await Vinyl.findByIdAndUpdate(
-        vinylId,
-        {
-          onSale: false,
-        },
-        { new: true }
-      );
-
+      
+      const vinylObj = await Vinyl.findById(vinylId)
+     
       const buyerObj = await User.findById(buyerId);
 
       const operationObj = await Operation.create({
@@ -68,6 +63,9 @@ router.get("/:operationId", isTokenValid, async (req, res, next) => {
       .populate("product")
       .populate("buyerUser")
       .populate("sellerUser");
+
+    
+
     res.json(operation);
   } catch (error) {
     next(error);
@@ -87,4 +85,28 @@ router.get("/allOperations/all", isTokenValid, async (req, res, next) => {
       next(error);
     }
   });
+
+router.post("/update-on-sale/:vinylId", isTokenValid, async (req, res, next) => {
+  try {
+    const vinylObj = await Vinyl.findByIdAndUpdate(
+      req.params.vinylId,
+      {
+        onSale: false,
+      },
+      { new: true }
+    );
+    res.json('onSale actualizado')
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.delete("/delete/:operationId", isTokenValid, async (req, res, next) => {
+  try {
+    await Operation.findByIdAndDelete(req.params.operationId)
+    res.json('operación borrada')
+  } catch (error) {
+    next(error)
+  }
+})
 module.exports = router;
