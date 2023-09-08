@@ -5,23 +5,23 @@ const isTokenValid = require("../middlewares/isTokenValid");
 
 //POST => /vinyl/create
 router.post("/create", isTokenValid, async (req, res, next) => {
-  const {
-    title,
-    artist,
-    image,
-    description,
-    price,
-    stateConservation,
-    genre,
-  } = req.body;
+  const { title, artist, image, description, price, stateConservation, genre } =
+    req.body;
   const sellerUser = req.payload._id;
 
-  if (!title || !artist  || !description || !price || !stateConservation || !genre) {
+  if (
+    !title ||
+    !artist ||
+    !description ||
+    !price ||
+    !stateConservation ||
+    !genre
+  ) {
     res
       .status(400)
       .json({ errorMessage: "Todos los campos deben estar llenos" });
     return;
-  } 
+  }
   if (!image) {
     res
       .status(400)
@@ -30,7 +30,6 @@ router.post("/create", isTokenValid, async (req, res, next) => {
   }
 
   try {
-
     // console.log("necesito ver este objeto", req.payload);
     // console.log(sellerUser)
 
@@ -53,7 +52,7 @@ router.post("/create", isTokenValid, async (req, res, next) => {
 //GET => /vinyl/allVinyls
 router.get("/allVinyls", isTokenValid, async (req, res, next) => {
   try {
-    const response = await Vinyl.find({onSale: true});
+    const response = await Vinyl.find({ onSale: true });
     //  console.log(response);
     res.json(response);
   } catch (error) {
@@ -62,12 +61,12 @@ router.get("/allVinyls", isTokenValid, async (req, res, next) => {
 });
 //GET => /api/vinyl/:vinylId
 router.get("/:vinylId", isTokenValid, async (req, res, next) => {
-  console.log(req.params.vinylId, "req.paramasssssssssssssssssssssssssss");
+  // console.log(req.params.vinylId, "req.paramasssssssssssssssssssssssssss");
   try {
     const response = await Vinyl.findById(req.params.vinylId).populate(
       "sellerUser"
     );
-    console.log(response);
+    // console.log(response);
     res.json(response);
   } catch (error) {
     next(error);
@@ -105,7 +104,7 @@ router.put("/:vinylId", isTokenValid, async (req, res, next) => {
 router.delete("/:vinylId", isTokenValid, async (req, res, next) => {
   try {
     const response = await Vinyl.findByIdAndDelete(req.params.vinylId);
-    console.log("vinilo borrado", response);
+    // console.log("vinilo borrado", response);
     await User.updateMany(
       { favorite: req.params.vinylId },
       { $pull: { favorite: req.params.vinylId } }
@@ -119,7 +118,9 @@ router.delete("/:vinylId", isTokenValid, async (req, res, next) => {
 //GET => /vinyl/allVinyls
 router.get("/allVinyls/on-sale", isTokenValid, async (req, res, next) => {
   try {
-    const response = await Vinyl.find({$and: [{onSale: true}, {sellerUser: req.payload._id}]});
+    const response = await Vinyl.find({
+      $and: [{ onSale: true }, { sellerUser: req.payload._id }],
+    });
     //  console.log(response);
     res.json(response);
   } catch (error) {

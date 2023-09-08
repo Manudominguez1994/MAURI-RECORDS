@@ -7,14 +7,14 @@ const isTokenValid = require("../middlewares/isTokenValid");
 //POST /api/auth/signup => registrar el usuario
 router.post("/signup", async (req, res, next) => {
   const { name, email, password, confirmPassword, city } = req.body;
-  
-  console.log(req.body);
+
+  // console.log(req.body);
   //Validaciones:
   //Campos llenos
   if (!name || !email || !password || !confirmPassword || !city) {
     res
-    .status(400)
-    .json({ errorMessage: "Todos los campos deben estar llenos" });
+      .status(400)
+      .json({ errorMessage: "Todos los campos deben estar llenos" });
     return;
   }
   //Contraseñas Correctas
@@ -29,16 +29,22 @@ router.post("/signup", async (req, res, next) => {
     return;
   }
   //Contraseña tenga un formato especifico
-  const regexPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;;
+  const regexPassword =
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   if (!regexPassword.test(password, confirmPassword)) {
-    res.status(400).json({ errorMessage: "La contraseña tiene que contener Mayuscula,simbolo y numero" });
+    res
+      .status(400)
+      .json({
+        errorMessage:
+          "La contraseña tiene que contener Mayuscula,simbolo y numero",
+      });
     return;
   }
-  
+
   try {
     //Usuario no repetido
-    const userfound = await User.findOne({email: email})
-    if(userfound){
+    const userfound = await User.findOne({ email: email });
+    if (userfound) {
       res.status(400).json({ errorMessage: "Este usuario ya esta registrado" });
       return;
     }
@@ -100,7 +106,7 @@ router.post("/login", async (req, res, next) => {
 });
 //GET /api/auth/verify => indicar al FE que el usuario esta activo
 router.get("/verify", isTokenValid, (req, res, next) => {
-  console.log(req.payload);
+  // console.log(req.payload);
   res.json(req.payload);
   //! De ahora en adelante, cada vez que usemos el middleware isTokenValid... tendremos asceso a algo llamado req.payload
 });
